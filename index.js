@@ -68,6 +68,15 @@ function sessionValidation(req, res, next) {
   }
 }
 
+const escapeHtml = (unsafe) => {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+};
+
 // root path
 app.get("/", (req, res) => {
   if (!req.session.authenticated) {
@@ -99,10 +108,14 @@ app.post("/submitUser", async (req, res) => {
   var username = req.body.username;
   var password = req.body.password;
 
+  // HTML injection prevention
+  var escapedUsername = escapeHtml(username);
+  console.log(escapedUsername);
+
   var errorMessage = "";
   // Check if username or password is empty
   var results = await db_users.getUser({
-    user: username,
+    user: escapedUsername,
     hashedPassword: password,
   });
 
@@ -138,7 +151,7 @@ app.post("/submitUser", async (req, res) => {
   var hashedPassword = bcrypt.hashSync(password, saltRounds);
 
   var success = await db_users.createUser({
-    user: username,
+    user: escapedUsername,
     hashedPassword: hashedPassword,
   });
 
@@ -177,14 +190,24 @@ app.get("/login", (req, res) => {
     res.render("login", { errorMessage: errorMessage });
   }
 });
+const unescapeHtml = (safe) => {
+  return safe
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#039;/g, "'");
+};
 
 // Loging in
 app.post("/loggingin", async (req, res) => {
   var username = req.body.username;
   var password = req.body.password;
 
+  const escapedUsername = escapeHtml(username);
+
   var results = await db_users.getUser({
-    user: username,
+    user: escapedUsername,
     hashedPassword: password,
   });
 
