@@ -1,0 +1,19 @@
+<%- include("templates/header") %>
+
+
+    create user
+    <form action='/submitUser' method='post'>
+        <input name='username' type='text' placeholder='username'><br>
+        <input name='password' type='password' placeholder='password'><br>
+
+        <!-- Display error message if present -->
+        <% if (errorMessage) { %>
+            <p style="color: red;">
+                <%= errorMessage %>
+            </p>
+            <% } %>
+
+                <button>Submit</button>
+    </form>
+
+    <%- include("templates/footer") %>

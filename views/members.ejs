@@ -1,0 +1,19 @@
+<%- include("templates/header") %>
+
+    <h1> Hello, <%=username %>. </h1>
+    <br>
+
+    <!-- Generate a random number between 1 and 3 -->
+    <img src="<%= image %>" style="width:250px;">
+    <!-- <% const randomCat=Math.floor(Math.random() * 3) + 1; %>
+        <% if (randomCat==1) { %>
+            <img src='/cat1.jpg' style='width:250px;'>
+            <% } else if (randomCat==2) { %>
+                <img src='/cat2.jpg' style='width:250px;'>
+                <% } else { %>
+                    <img src='/cat3.jpg' style='width:250px;'>
+                    <% } %> -->
+
+    <%- include("templates/footer") %>
+        <br>
+        <button onclick="window.location.href='logout'" type="button">Log out</button>
