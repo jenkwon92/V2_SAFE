@@ -110,7 +110,6 @@ app.post("/submitUser", async (req, res) => {
 
   // HTML injection prevention
   var escapedUsername = escapeHtml(username);
-  console.log(escapedUsername);
 
   var errorMessage = "";
   // Check if username or password is empty
