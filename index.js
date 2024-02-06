@@ -219,7 +219,7 @@ app.post("/loggingin", async (req, res) => {
         req.session.username = username;
         req.session.cookie.maxAge = expireTime; //Session lasts 1 hour
 
-        res.redirect("/members");
+        res.redirect("/");
         return;
       } else {
         req.session.errorMessage = "Username or password not matched";
